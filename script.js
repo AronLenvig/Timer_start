@@ -9,13 +9,15 @@ const timerHeader = document.querySelector('.timer-header');
 const breakIcon = document.getElementById('break-icon');
 const sleepModal = document.getElementById("sleepModal");
 const sleepOkButton = document.getElementById("sleepOkButton");
+const awakeTimeInput = document.getElementById('awake-time');
+const sleepTimeInput = document.getElementById('sleep-time');
 
 let isPaused = false;
 let pauseTime;
 let isSleepTime = false;
 
-let awakeTime = 7;
-let sleepTime = 5;
+let awakeTime = awakeTimeInput.value ? awakeTimeInput.value : 60;
+let sleepTime = sleepTimeInput.value ? sleepTimeInput.value : 12;
 
 function timer(seconds) {
     clearInterval(countdown);
@@ -74,7 +76,7 @@ function displayTimeLeft(seconds) {
 startButton.addEventListener('click', () => {
     isPaused = false;
     timerHeader.textContent = 'Awake';
-    timer(10); // Start 1 minute countdown
+    timer(awakeTime); // Start 1 minute countdown
     timerDisplay.style.color = 'initial';
     startButton.style.display = 'none'; // Hide start button
     stopButton.style.display = 'initial'; // Show stop button
@@ -88,15 +90,12 @@ stopButton.addEventListener('click', () => {
     clearInterval(countdown); // Stop the current countdown interval
     timerDisplay.style.color = 'red';
     stopButton.style.display = 'none'; // Hide stop button
+    awakeTimeInput.style.display = 'none'; // Hide awake time input
+    sleepTimeInput.style.display = 'none'; // Hide sleep time input
     continueButton.style.display = 'initial'; // Show continue button
+
     // Display break icon or other UI changes for pause
 });
-// stopButton.addEventListener('click', () => {
-//     isPaused = true;
-//     timerDisplay.style.color = 'red';
-//     stopButton.style.display = 'none'; // Hide stop button
-//     continueButton.style.display = 'initial'; // Show continue button
-// });
 
 continueButton.addEventListener('click', () => {
     isPaused = false;
