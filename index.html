@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circular Countdown Timer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <div class="timer-container">
+        <div class="timer-header">
+            Awake
+        </div>
+        <div id="timer" class="timer">
+            <div class="time-left">0:00</div>
+            <div id="break-icon" class="break-icon" style="display: none;">☕</div> <!-- Placeholder for the break icon -->
+        </div>
+        <div class="buttons">
+            <button id="start">Start</button>
+            <button id="stop">Stop</button>
+            <button id="continue" style="display: none;">Continue</button>
+            <button id="reset" style="display: none;">Reset</button>
+        </div>
+    </div>
+    <audio id="wake-up-sound" src="wake-up-sound.wav" preload="auto"></audio>
+    <script src="script.js"></script>
+</body>
+</html>
