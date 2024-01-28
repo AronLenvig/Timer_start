@@ -4,16 +4,30 @@ const startButton = document.getElementById('start');
 const stopButton = document.getElementById('stop');
 const continueButton = document.getElementById('continue');
 const resetButton = document.getElementById('reset');
-const wakeUpSound = document.getElementById('wake-up-sound');
 const timerHeader = document.querySelector('.timer-header');
 const sleepModal = document.getElementById("sleepModal");
 const sleepOkButton = document.getElementById("sleepOkButton");
 const awakeTimeInput = document.getElementById('awake-time');
 const sleepTimeInput = document.getElementById('sleep-time');
-const sleepSound = document.getElementById('sleep-sound');
-const awakeSound = document.getElementById('awake-sound');
 const timerInputs = document.querySelectorAll(`.timerInput`);
 const timerCircle = document.getElementById('timer-circle').querySelector('circle');
+
+const wakeUpSound = document.getElementById('wake-up-sound');
+const sleepSound = document.getElementById('sleep-sound');
+const awakeSound = document.getElementById('awake-sound');
+
+const a_wake_0 = document.getElementById('a-wake-0');
+const b_sleep_0 = document.getElementById('b-sleep-0');
+const b_wake_0 = document.getElementById('b-wake-0');
+const s_sleep_0 = document.getElementById('s-sleep-0');
+const s_wake_0 = document.getElementById('s-wake-0');
+
+b_sleep_0.onended = () => {
+    s_wake_0.play();
+};
+s_sleep_0.onended = () => {
+    a_wake_0.play();
+};
 
 const circumference = 2 * Math.PI * 50; // 40 is the radius of the circle
 
@@ -70,8 +84,10 @@ function timer(seconds) {
                 // isPaused = true;
                 pauseTime = Math.round((targetTime - Date.now()) / 1000);
                 pauseTime = pauseTime < 0 ? 0 : pauseTime; // Ensure pause time is not negative
-                sleepSound.play();
-                awakeSound.pause();
+
+                b_wake_0.play();
+                // sleepSound.play();
+                // awakeSound.pause();
 
                 new Promise(r => setTimeout(r, 100)).then(() => {
                     console.log(sleepTime);
@@ -89,8 +105,10 @@ function timer(seconds) {
                 // isPaused = true;
                 pauseTime = Math.round((targetTime - Date.now()) / 1000);
                 pauseTime = pauseTime < 0 ? 0 : pauseTime; // Ensure pause time is not negative
-                sleepSound.play();
-                awakeSound.pause();
+
+                b_sleep_0.play();
+                // sleepSound.play();
+                // awakeSound.pause();
 
                 new Promise(r => setTimeout(r, 100)).then(() => {
                     console.log(sleepTime);
@@ -102,11 +120,14 @@ function timer(seconds) {
             else if (isSleepTime == 2) {
                 console.log(2);
                 clearInterval(countdown);
-                sleepSound.pause();
-                wakeUpSound.play();
+
+                s_sleep_0.play();
+                // sleepSound.pause();
+                // wakeUpSound.play();
+                // awakeSound.play();
+
                 timerHeader.textContent = 'Awake';
                 isSleepTime = 0;
-                awakeSound.play();
 
                 new Promise(r => setTimeout(r, 2000)).then(() => {
                     console.log(sleepTime);
@@ -144,7 +165,7 @@ startButton.addEventListener('click', () => {
 
     timerInputs.forEach(x => x.style.display = 'none');
 
-    sleepSound.play();
+    // sleepSound.play();
 });
 
 // Update the stop and continue button event listeners
@@ -168,10 +189,10 @@ continueButton.addEventListener('click', () => {
     continueButton.style.display = 'none'; // Hide continue button
     stopButton.style.display = 'initial'; // Show stop button
     if ([0, 1].includes(isSleepTime)) {
-        sleepSound.play();
+        // sleepSound.play();
     }
     else {
-        awakeSound.play();
+        // awakeSound.play();
     }
 });
 
@@ -204,6 +225,6 @@ sleepOkButton.onclick = function() {
     sleepModal.style.display = "none";
     isPaused = false;
     timer(sleepTime); // Start 12 seconds countdown
-    sleepSound.play();
+    // sleepSound.play();
     // document.getElementById('break-icon').style.display = 'block'; // Show break icon
 }
