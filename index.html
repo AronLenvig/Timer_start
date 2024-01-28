@@ -11,9 +11,12 @@
         <div class="timer-header">
             Sleep
         </div>
+        
         <div id="timer" class="timer">
-            <div class="time-left">0:00</div>
-            <div id="break-icon" class="break-icon" style="display: none;">☕</div> <!-- Placeholder for the break icon -->
+            <svg id="timer-circle" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="40" fill="none" stroke="#4CAF50" stroke-width="2"></circle>
+                <text class="time-left" x="50" y="50" text-anchor="middle" dy="7" font-size="20">0:00</text>
+            </svg>
         </div>
         <div class="buttons">
             <div class="timerInput" style="display: flex; flex-direction: column; gap: 8px;">

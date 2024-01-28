@@ -24,15 +24,6 @@ input[type=text] {
     text-align: center;
 }
 
-.break-icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 3em; /* Adjust size as needed */
-    color: #3498db; /* Adjust color as needed */
-}
-
 .timer {
     width: 200px;
     height: 200px;
@@ -51,9 +42,26 @@ input[type=text] {
     margin-bottom: 10px;
 }
 
-.time-left {
+#time-left {
     font-size: 2em;
     color: white;
+}
+
+#timer-circle {
+    width: 200px;
+    height: 200px;
+}
+
+#timer-circle circle {
+    transition: stroke-dashoffset 0.5s linear;
+}
+
+#timer-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2em;
 }
 
 /* The Modal (background) */

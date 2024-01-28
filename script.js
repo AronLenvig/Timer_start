@@ -6,7 +6,6 @@ const continueButton = document.getElementById('continue');
 const resetButton = document.getElementById('reset');
 const wakeUpSound = document.getElementById('wake-up-sound');
 const timerHeader = document.querySelector('.timer-header');
-const breakIcon = document.getElementById('break-icon');
 const sleepModal = document.getElementById("sleepModal");
 const sleepOkButton = document.getElementById("sleepOkButton");
 const awakeTimeInput = document.getElementById('awake-time');
@@ -14,6 +13,8 @@ const sleepTimeInput = document.getElementById('sleep-time');
 const sleepSound = document.getElementById('sleep-sound');
 const awakeSound = document.getElementById('awake-sound');
 const timerInputs = document.querySelectorAll(`.timerInput`);
+const timerCircle = document.getElementById('timer-circle').querySelector('circle');
+const circumference = 2 * Math.PI * 40; // 40 is the radius of the circle
 sleepSound.loop = true;
 awakeSound.loop = true;
 
@@ -24,9 +25,11 @@ let isSleepTime = true;
 let awakeTime = 60;
 let sleepTime = 12;
 
-function timer(seconds) {
-    clearInterval(countdown);
+timerCircle.style.strokeDasharray = circumference;
+timerCircle.style.strokeDashoffset = 0;
 
+function timer(seconds) {
+    clearInterval(countdown);    
     if (!isPaused) {
         startTime = Date.now();
         targetTime = startTime + seconds * 1000;
@@ -41,6 +44,9 @@ function timer(seconds) {
     countdown = setInterval(() => {
         const currentTime = Date.now();
         const secondsLeft = Math.round((targetTime - currentTime) / 1000);
+
+        const timeFraction = secondsLeft / seconds;
+        timerCircle.style.strokeDashoffset = circumference * (1 - timeFraction);
 
         if (secondsLeft < 0) {
             clearInterval(countdown);
