@@ -16,8 +16,8 @@ let isPaused = false;
 let pauseTime;
 let isSleepTime = false;
 
-let awakeTime = awakeTimeInput.value ? awakeTimeInput.value : 60;
-let sleepTime = sleepTimeInput.value ? sleepTimeInput.value : 12;
+let awakeTime = 60;
+let sleepTime = 12;
 
 function timer(seconds) {
     clearInterval(countdown);
@@ -28,7 +28,6 @@ function timer(seconds) {
         displayTimeLeft(seconds);
         console.log(targetTime);
     } else {
-        // Calculate new target time based on the remaining pause time
         targetTime = Date.now() + pauseTime * 1000;
         isPaused = false; // Reset pause state
         console.log(targetTime);
@@ -43,7 +42,6 @@ function timer(seconds) {
 
             if (!isSleepTime) {
                 clearInterval(countdown);
-                // stop the timer and display the sleep modal
                 sleepModal.style.display = "block";
                 timerHeader.textContent = 'Sleep';
                 isSleepTime = true;
@@ -76,12 +74,17 @@ function displayTimeLeft(seconds) {
 startButton.addEventListener('click', () => {
     isPaused = false;
     timerHeader.textContent = 'Awake';
+    awakeTime = awakeTimeInput.value ? awakeTimeInput.value : 60;
+    sleepTime = sleepTimeInput.value ? sleepTimeInput.value : 12;
     timer(awakeTime); // Start 1 minute countdown
     timerDisplay.style.color = 'initial';
     startButton.style.display = 'none'; // Hide start button
     stopButton.style.display = 'initial'; // Show stop button
     resetButton.style.display = 'initial'; // Show reset button
+    awakeTimeInput.style.display = 'none'; // Hide awake time input
+    sleepTimeInput.style.display = 'none'; // Hide sleep time input
 });
+
 // Update the stop and continue button event listeners
 stopButton.addEventListener('click', () => {
     isPaused = true;
@@ -90,11 +93,7 @@ stopButton.addEventListener('click', () => {
     clearInterval(countdown); // Stop the current countdown interval
     timerDisplay.style.color = 'red';
     stopButton.style.display = 'none'; // Hide stop button
-    awakeTimeInput.style.display = 'none'; // Hide awake time input
-    sleepTimeInput.style.display = 'none'; // Hide sleep time input
     continueButton.style.display = 'initial'; // Show continue button
-
-    // Display break icon or other UI changes for pause
 });
 
 continueButton.addEventListener('click', () => {
@@ -116,6 +115,8 @@ resetButton.addEventListener('click', () => {
     continueButton.style.display = 'none'; // Hide continue button
     startButton.style.display = 'initial'; // Show start button
     timerDisplay.style.display = 'initial'; // Show timer text
+    awakeTimeInput.style.display = 'initial'; // Show awake time input
+    sleepTimeInput.style.display = 'initial'; // Show sleep time input
 });
 
 
