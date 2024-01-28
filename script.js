@@ -76,7 +76,7 @@ function timer(seconds) {
             clearInterval(countdown);
 
             if (isSleepTime == 0) {
-                console.log(0);
+                // console.log(0);
                 clearInterval(countdown);
                 timerHeader.textContent = 'Constable';
                 // sleepModal.style.display = "block";
@@ -96,7 +96,7 @@ function timer(seconds) {
                 return;
             }
             else if (isSleepTime == 1) {
-                console.log(1);
+                // console.log(1);
                 clearInterval(countdown);
                 timerHeader.textContent = 'Traitor';
                 // sleepModal.style.display = "block";
@@ -116,7 +116,7 @@ function timer(seconds) {
                 return;
             }
             else if (isSleepTime == 2) {
-                console.log(2);
+                // console.log(2);
                 clearInterval(countdown);
 
                 s_sleep_0.play();
@@ -180,7 +180,7 @@ stopButton.addEventListener('click', () => {
 
 continueButton.addEventListener('click', () => {
     isPaused = false;
-    console.log(pauseTime);
+    // console.log(pauseTime);
     timer(pauseTime);
     timerDisplay.style.fill = 'white';
     continueButton.style.display = 'none'; // Hide continue button
