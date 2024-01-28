@@ -22,7 +22,8 @@ awakeSound.loop = true;
 
 let isPaused = false;
 let pauseTime;
-let isSleepTime = true;
+// let isSleepTime = true;
+let isSleepTime = 0;
 
 let awakeTime = 60;
 let sleepTime = 12;
@@ -36,11 +37,11 @@ function timer(seconds) {
         startTime = Date.now();
         targetTime = startTime + seconds * 1000;
         displayTimeLeft(seconds);
-        console.log(targetTime);
+        // console.log(targetTime);
     } else {
         targetTime = Date.now() + pauseTime * 1000;
         isPaused = false; // Reset pause state
-        console.log(targetTime);
+        // console.log(targetTime);
     }
 
     countdown = setInterval(() => {
@@ -52,7 +53,7 @@ function timer(seconds) {
         const circleTick = circumference * (1 - timeFraction);
 
         if (circleTick > circumference) {
-            timerCircle.style.strokeDashoffset = circumference;
+            timerCircle.style.strokeDashoffset = 0;
         } else {
             timerCircle.style.strokeDashoffset = circleTick;
         }
@@ -60,25 +61,58 @@ function timer(seconds) {
         if (secondsLeft < 0) {
             clearInterval(countdown);
 
-            if (!isSleepTime) {
+            if (isSleepTime == 0) {
+                console.log(0);
                 clearInterval(countdown);
-                sleepModal.style.display = "block";
-                timerHeader.textContent = 'Sleep';
-                isSleepTime = true;
-                isPaused = true;
+                timerHeader.textContent = 'Constable';
+                // sleepModal.style.display = "block";
+                isSleepTime = 1;
+                // isPaused = true;
                 pauseTime = Math.round((targetTime - Date.now()) / 1000);
                 pauseTime = pauseTime < 0 ? 0 : pauseTime; // Ensure pause time is not negative
+                sleepSound.play();
                 awakeSound.pause();
+
+                new Promise(r => setTimeout(r, 100)).then(() => {
+                    console.log(sleepTime);
+                    timer(sleepTime);
+                });
+
                 return;
             }
-            else {
+            else if (isSleepTime == 1) {
+                console.log(1);
+                clearInterval(countdown);
+                timerHeader.textContent = 'Traitor';
+                // sleepModal.style.display = "block";
+                isSleepTime = 2;
+                // isPaused = true;
+                pauseTime = Math.round((targetTime - Date.now()) / 1000);
+                pauseTime = pauseTime < 0 ? 0 : pauseTime; // Ensure pause time is not negative
+                sleepSound.play();
+                awakeSound.pause();
+
+                new Promise(r => setTimeout(r, 100)).then(() => {
+                    console.log(sleepTime);
+                    timer(sleepTime);
+                });
+
+                return;
+            }
+            else if (isSleepTime == 2) {
+                console.log(2);
                 clearInterval(countdown);
                 sleepSound.pause();
                 wakeUpSound.play();
                 timerHeader.textContent = 'Awake';
-                isSleepTime = false;
-                setTimeout(() => timer(awakeTime), 2000); // Restart awaketimer countdown after 2 second
+                isSleepTime = 0;
                 awakeSound.play();
+
+                new Promise(r => setTimeout(r, 2000)).then(() => {
+                    console.log(sleepTime);
+                    timer(sleepTime);
+                });
+
                 return;
             }
         } else {
@@ -96,10 +130,11 @@ function displayTimeLeft(seconds) {
 
 startButton.addEventListener('click', () => {
     isPaused = false;
-    timerHeader.textContent = 'Sleep';
+    timerHeader.textContent = 'Constable';
+    isSleepTime = 0;
     awakeTime = awakeTimeInput.value ? awakeTimeInput.value : 60;
     sleepTime = sleepTimeInput.value ? sleepTimeInput.value : 12;
-    timer(sleepTime); // Start 1 minute countdown
+    timer(0); // Start 1 minute countdown
     timerDisplay.style.fill = 'white';
     startButton.style.display = 'none'; // Hide start button
     stopButton.style.display = 'initial'; // Show stop button
@@ -132,7 +167,7 @@ continueButton.addEventListener('click', () => {
     timerDisplay.style.fill = 'white';
     continueButton.style.display = 'none'; // Hide continue button
     stopButton.style.display = 'initial'; // Show stop button
-    if (isSleepTime) {
+    if ([0, 1].includes(isSleepTime)) {
         sleepSound.play();
     }
     else {
@@ -168,13 +203,7 @@ resetButton.addEventListener('click', () => {
 sleepOkButton.onclick = function() {
     sleepModal.style.display = "none";
     isPaused = false;
-    timer(12); // Start 12 seconds countdown
+    timer(sleepTime); // Start 12 seconds countdown
     sleepSound.play();
     // document.getElementById('break-icon').style.display = 'block'; // Show break icon
 }
-
-// Close the modal and start the sleep timer
-sleepOkButton.addEventListener('click', () => {
-    sleepModal.style.display = "none";
-    timer(sleepTime); // Start 12 seconds countdown
-});
