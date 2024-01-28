@@ -27,7 +27,6 @@ input[type=text] {
 .timer {
     width: 200px;
     height: 200px;
-    border: 10px solid #3498db;
     border-radius: 50%;
     display: flex;
     justify-content: center;

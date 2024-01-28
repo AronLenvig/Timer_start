@@ -14,7 +14,9 @@ const sleepSound = document.getElementById('sleep-sound');
 const awakeSound = document.getElementById('awake-sound');
 const timerInputs = document.querySelectorAll(`.timerInput`);
 const timerCircle = document.getElementById('timer-circle').querySelector('circle');
-const circumference = 2 * Math.PI * 40; // 40 is the radius of the circle
+
+const circumference = 2 * Math.PI * 50; // 40 is the radius of the circle
+
 sleepSound.loop = true;
 awakeSound.loop = true;
 
@@ -46,7 +48,14 @@ function timer(seconds) {
         const secondsLeft = Math.round((targetTime - currentTime) / 1000);
 
         const timeFraction = secondsLeft / seconds;
-        timerCircle.style.strokeDashoffset = circumference * (1 - timeFraction);
+
+        const circleTick = circumference * (1 - timeFraction);
+
+        if (circleTick > circumference) {
+            timerCircle.style.strokeDashoffset = circumference;
+        } else {
+            timerCircle.style.strokeDashoffset = circleTick;
+        }
 
         if (secondsLeft < 0) {
             clearInterval(countdown);
@@ -91,7 +100,7 @@ startButton.addEventListener('click', () => {
     awakeTime = awakeTimeInput.value ? awakeTimeInput.value : 60;
     sleepTime = sleepTimeInput.value ? sleepTimeInput.value : 12;
     timer(sleepTime); // Start 1 minute countdown
-    timerDisplay.style.color = 'inherit';
+    timerDisplay.style.fill = 'white';
     startButton.style.display = 'none'; // Hide start button
     stopButton.style.display = 'initial'; // Show stop button
     resetButton.style.display = 'initial'; // Show reset button
@@ -109,7 +118,7 @@ stopButton.addEventListener('click', () => {
     pauseTime = Math.round((targetTime - Date.now()) / 1000);
     pauseTime = pauseTime < 0 ? 0 : pauseTime; // Ensure pause time is not negative
     clearInterval(countdown); // Stop the current countdown interval
-    timerDisplay.style.color = 'red';
+    timerDisplay.style.fill = 'red';
     stopButton.style.display = 'none'; // Hide stop button
     continueButton.style.display = 'initial'; // Show continue button
     awakeSound.pause();
@@ -120,7 +129,7 @@ continueButton.addEventListener('click', () => {
     isPaused = false;
     console.log(pauseTime);
     timer(pauseTime);
-    timerDisplay.style.color = 'inherit';
+    timerDisplay.style.fill = 'white';
     continueButton.style.display = 'none'; // Hide continue button
     stopButton.style.display = 'initial'; // Show stop button
     if (isSleepTime) {
@@ -135,7 +144,7 @@ resetButton.addEventListener('click', () => {
     clearInterval(countdown);
     timerDisplay.textContent = '0:00';
     timerHeader.textContent = 'Awake';
-    timerDisplay.style.color = 'inherit';
+    timerDisplay.style.fill = 'white';
     resetButton.style.display = 'none'; // Hide reset button
     stopButton.style.display = 'none'; // Hide stop button
     continueButton.style.display = 'none'; // Hide continue button
@@ -143,6 +152,8 @@ resetButton.addEventListener('click', () => {
     timerDisplay.style.display = 'initial'; // Show timer text
     awakeTimeInput.style.display = 'initial'; // Show awake time input
     sleepTimeInput.style.display = 'initial'; // Show sleep time input
+    timerCircle.style.strokeDasharray = circumference;
+    timerCircle.style.strokeDashoffset = 0;
 
     timerInputs.forEach(x => x.style.display = 'flex');
 
