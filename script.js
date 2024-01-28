@@ -11,6 +11,10 @@ const sleepModal = document.getElementById("sleepModal");
 const sleepOkButton = document.getElementById("sleepOkButton");
 const awakeTimeInput = document.getElementById('awake-time');
 const sleepTimeInput = document.getElementById('sleep-time');
+const sleepSound = document.getElementById('sleep-sound');
+const awakeSound = document.getElementById('awake-sound');
+sleepSound.loop = true;
+awakeSound.loop = true;
 
 let isPaused = false;
 let pauseTime;
@@ -48,14 +52,17 @@ function timer(seconds) {
                 isPaused = true;
                 pauseTime = Math.round((targetTime - Date.now()) / 1000);
                 pauseTime = pauseTime < 0 ? 0 : pauseTime; // Ensure pause time is not negative
+                awakeSound.pause();
                 return;
             }
             else {
                 clearInterval(countdown);
+                sleepSound.pause();
                 wakeUpSound.play();
                 timerHeader.textContent = 'Awake';
                 isSleepTime = false;
                 setTimeout(() => timer(awakeTime), 2000); // Restart awaketimer countdown after 2 second
+                awakeSound.play();
                 return;
             }
         } else {
@@ -83,6 +90,7 @@ startButton.addEventListener('click', () => {
     resetButton.style.display = 'initial'; // Show reset button
     awakeTimeInput.style.display = 'none'; // Hide awake time input
     sleepTimeInput.style.display = 'none'; // Hide sleep time input
+    awakeSound.play();
 });
 
 // Update the stop and continue button event listeners
@@ -94,6 +102,8 @@ stopButton.addEventListener('click', () => {
     timerDisplay.style.color = 'red';
     stopButton.style.display = 'none'; // Hide stop button
     continueButton.style.display = 'initial'; // Show continue button
+    awakeSound.pause();
+    sleepSound.pause();
 });
 
 continueButton.addEventListener('click', () => {
@@ -103,6 +113,12 @@ continueButton.addEventListener('click', () => {
     timerDisplay.style.color = 'initial';
     continueButton.style.display = 'none'; // Hide continue button
     stopButton.style.display = 'initial'; // Show stop button
+    if (isSleepTime) {
+        sleepSound.play();
+    }
+    else {
+        awakeSound.play();
+    }
 });
 
 resetButton.addEventListener('click', () => {
@@ -117,6 +133,10 @@ resetButton.addEventListener('click', () => {
     timerDisplay.style.display = 'initial'; // Show timer text
     awakeTimeInput.style.display = 'initial'; // Show awake time input
     sleepTimeInput.style.display = 'initial'; // Show sleep time input
+    awakeSound.pause();
+    awakeSound.currentTime = 0;
+    sleepSound.pause();
+    sleepSound.currentTime = 0;
 });
 
 
@@ -124,7 +144,8 @@ resetButton.addEventListener('click', () => {
 sleepOkButton.onclick = function() {
     sleepModal.style.display = "none";
     isPaused = false;
-    timer(12); // Start 12 seconds countdown    
+    timer(12); // Start 12 seconds countdown
+    sleepSound.play();
     // document.getElementById('break-icon').style.display = 'block'; // Show break icon
 }
 
