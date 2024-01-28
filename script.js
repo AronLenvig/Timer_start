@@ -18,7 +18,7 @@ awakeSound.loop = true;
 
 let isPaused = false;
 let pauseTime;
-let isSleepTime = false;
+let isSleepTime = true;
 
 let awakeTime = 60;
 let sleepTime = 12;
@@ -72,7 +72,7 @@ function timer(seconds) {
 }
 
 function displayTimeLeft(seconds) {
-    const minutes = Math.floor(seconds / 60);
+    const minutes = Math.trunc(seconds / 60);
     const remainderSeconds = seconds % 60;
     const display = `${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`;
     timerDisplay.textContent = display;
@@ -80,17 +80,17 @@ function displayTimeLeft(seconds) {
 
 startButton.addEventListener('click', () => {
     isPaused = false;
-    timerHeader.textContent = 'Awake';
+    timerHeader.textContent = 'Sleep';
     awakeTime = awakeTimeInput.value ? awakeTimeInput.value : 60;
     sleepTime = sleepTimeInput.value ? sleepTimeInput.value : 12;
-    timer(awakeTime); // Start 1 minute countdown
+    timer(sleepTime); // Start 1 minute countdown
     timerDisplay.style.color = 'initial';
     startButton.style.display = 'none'; // Hide start button
     stopButton.style.display = 'initial'; // Show stop button
     resetButton.style.display = 'initial'; // Show reset button
     awakeTimeInput.style.display = 'none'; // Hide awake time input
     sleepTimeInput.style.display = 'none'; // Hide sleep time input
-    awakeSound.play();
+    sleepSound.play();
 });
 
 // Update the stop and continue button event listeners
