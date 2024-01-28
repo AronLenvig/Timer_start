@@ -13,6 +13,7 @@ const awakeTimeInput = document.getElementById('awake-time');
 const sleepTimeInput = document.getElementById('sleep-time');
 const sleepSound = document.getElementById('sleep-sound');
 const awakeSound = document.getElementById('awake-sound');
+const timerInputs = document.querySelectorAll(`.timerInput`);
 sleepSound.loop = true;
 awakeSound.loop = true;
 
@@ -84,12 +85,15 @@ startButton.addEventListener('click', () => {
     awakeTime = awakeTimeInput.value ? awakeTimeInput.value : 60;
     sleepTime = sleepTimeInput.value ? sleepTimeInput.value : 12;
     timer(sleepTime); // Start 1 minute countdown
-    timerDisplay.style.color = 'initial';
+    timerDisplay.style.color = 'inherit';
     startButton.style.display = 'none'; // Hide start button
     stopButton.style.display = 'initial'; // Show stop button
     resetButton.style.display = 'initial'; // Show reset button
     awakeTimeInput.style.display = 'none'; // Hide awake time input
     sleepTimeInput.style.display = 'none'; // Hide sleep time input
+
+    timerInputs.forEach(x => x.style.display = 'none');
+
     sleepSound.play();
 });
 
@@ -110,7 +114,7 @@ continueButton.addEventListener('click', () => {
     isPaused = false;
     console.log(pauseTime);
     timer(pauseTime);
-    timerDisplay.style.color = 'initial';
+    timerDisplay.style.color = 'inherit';
     continueButton.style.display = 'none'; // Hide continue button
     stopButton.style.display = 'initial'; // Show stop button
     if (isSleepTime) {
@@ -125,7 +129,7 @@ resetButton.addEventListener('click', () => {
     clearInterval(countdown);
     timerDisplay.textContent = '0:00';
     timerHeader.textContent = 'Awake';
-    timerDisplay.style.color = 'initial';
+    timerDisplay.style.color = 'inherit';
     resetButton.style.display = 'none'; // Hide reset button
     stopButton.style.display = 'none'; // Hide stop button
     continueButton.style.display = 'none'; // Hide continue button
@@ -133,6 +137,9 @@ resetButton.addEventListener('click', () => {
     timerDisplay.style.display = 'initial'; // Show timer text
     awakeTimeInput.style.display = 'initial'; // Show awake time input
     sleepTimeInput.style.display = 'initial'; // Show sleep time input
+
+    timerInputs.forEach(x => x.style.display = 'flex');
+
     awakeSound.pause();
     awakeSound.currentTime = 0;
     sleepSound.pause();
@@ -154,4 +161,3 @@ sleepOkButton.addEventListener('click', () => {
     sleepModal.style.display = "none";
     timer(sleepTime); // Start 12 seconds countdown
 });
-

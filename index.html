@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="background: black; color: white; height: 100vh; overflow: hidden;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,13 +16,22 @@
             <div id="break-icon" class="break-icon" style="display: none;">☕</div> <!-- Placeholder for the break icon -->
         </div>
         <div class="buttons">
-            <button id="start">Start</button>
-            <button id="stop" style="display: none;">Stop</button>
-            <button id="continue" style="display: none;">Continue</button>
-            <button id="reset" style="display: none;">Reset</button>
-            <input id="awake-time" placeholder="60"></input>
-            <input id="sleep-time" placeholder="12"></input>
-            
+            <div class="timerInput" style="display: flex; flex-direction: column; gap: 8px;">
+                Day Timer
+                <input type="text" id="awake-time" value="60"></input>
+            </div>
+
+            <div class="timerInput" style="display: flex; flex-direction: column; gap: 8px;">
+                Night Timer
+                <input type="text" id="sleep-time" value="12"></input>
+            </div>
+
+            <div>
+                <button id="start">Start</button>
+                <button id="stop" style="display: none;">Stop</button>
+                <button id="continue" style="display: none;">Continue</button>
+                <button id="reset" style="display: none;">Reset</button>
+            </div>
         </div>
     </div>
     <div id="sleepModal" class="modal">
