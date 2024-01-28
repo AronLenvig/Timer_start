@@ -29,7 +29,7 @@ s_sleep_0.onended = () => {
     a_wake_0.play();
 };
 
-const circumference = 2 * Math.PI * 50; // 40 is the radius of the circle
+const circumference = 2 * Math.PI * 50;
 
 sleepSound.loop = true;
 awakeSound.loop = true;
@@ -40,7 +40,7 @@ let pauseTime;
 let isSleepTime = 0;
 
 let awakeTime = 60;
-let sleepTime = 12;
+let sleepTime = 20;
 
 timerCircle.style.strokeDasharray = circumference;
 timerCircle.style.strokeDashoffset = 0;
@@ -90,7 +90,6 @@ function timer(seconds) {
                 // awakeSound.pause();
 
                 new Promise(r => setTimeout(r, 100)).then(() => {
-                    console.log(sleepTime);
                     timer(sleepTime);
                 });
 
@@ -111,7 +110,6 @@ function timer(seconds) {
                 // awakeSound.pause();
 
                 new Promise(r => setTimeout(r, 100)).then(() => {
-                    console.log(sleepTime);
                     timer(sleepTime);
                 });
 
@@ -130,8 +128,7 @@ function timer(seconds) {
                 isSleepTime = 0;
 
                 new Promise(r => setTimeout(r, 2000)).then(() => {
-                    console.log(sleepTime);
-                    timer(sleepTime);
+                    timer(awakeTime);
                 });
 
                 return;
@@ -154,7 +151,7 @@ startButton.addEventListener('click', () => {
     timerHeader.textContent = 'Constable';
     isSleepTime = 0;
     awakeTime = awakeTimeInput.value ? awakeTimeInput.value : 60;
-    sleepTime = sleepTimeInput.value ? sleepTimeInput.value : 12;
+    sleepTime = sleepTimeInput.value ? sleepTimeInput.value : 20;
     timer(0); // Start 1 minute countdown
     timerDisplay.style.fill = 'white';
     startButton.style.display = 'none'; // Hide start button
@@ -224,7 +221,7 @@ resetButton.addEventListener('click', () => {
 sleepOkButton.onclick = function() {
     sleepModal.style.display = "none";
     isPaused = false;
-    timer(sleepTime); // Start 12 seconds countdown
+    timer(sleepTime);
     // sleepSound.play();
     // document.getElementById('break-icon').style.display = 'block'; // Show break icon
 }
