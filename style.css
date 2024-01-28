@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'DSEG';
-  src: url('DSEG7ClassicMini-Bold.woff2');
+  src: url('DSEG7ClassicMini-Regular.woff');
 }
 
 body {
@@ -46,9 +46,7 @@ input[type=text] {
     margin-bottom: 16px;
 }
 
-#time-left {
-    font-size: 2em;
-    color: white;
+.time-left {
     font-family: "DSEG";
 }
 
