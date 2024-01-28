@@ -14,6 +14,7 @@ const timerCircle = document.getElementById('timer-circle').querySelector('circl
 
 const wakeUpSound = document.getElementById('wake-up-sound');
 const sleepSound = document.getElementById('sleep-sound');
+sleepSound.volume = 0.1;
 const awakeSound = document.getElementById('awake-sound');
 
 const a_wake_0 = document.getElementById('a-wake-0');
@@ -162,7 +163,7 @@ startButton.addEventListener('click', () => {
 
     timerInputs.forEach(x => x.style.display = 'none');
 
-    // sleepSound.play();
+    sleepSound.play();
 });
 
 // Update the stop and continue button event listeners
