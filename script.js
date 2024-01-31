@@ -78,7 +78,6 @@ function timer(seconds) {
 
             if (isSleepTime == 0) {
                 // console.log(0);
-                clearInterval(countdown);
                 timerHeader.textContent = 'Constable';
                 // sleepModal.style.display = "block";
                 isSleepTime = 1;
@@ -98,7 +97,6 @@ function timer(seconds) {
             }
             else if (isSleepTime == 1) {
                 // console.log(1);
-                clearInterval(countdown);
                 timerHeader.textContent = 'Traitor';
                 // sleepModal.style.display = "block";
                 isSleepTime = 2;
